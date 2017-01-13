@@ -149,7 +149,6 @@ eon.chart({
       show: true,
       item: {
         onmouseover: function(id) {
-          //could also get pics easily straight from Warriors website instead of having in img folder
           if (id == "Moana") {
             document.getElementById('hoverImg').innerHTML = "<img src='img/moana.jpg' border=0/></a>";
             document.getElementById("hoverImg").style.transitionDuration = "10s";
@@ -169,7 +168,7 @@ eon.chart({
             document.getElementById('hoverImg').innerHTML = "<img src='img/hiddenfigures.jpg' border=0/></a>";
             document.getElementById("hoverImg").style.transitionDuration = "10s";
           } else if (id == "Fences") {
-            document.getElementById('hoverImg').innerHTML = "<img class = 'resize' src='img/win.png' border=0/>";
+            document.getElementById('hoverImg').innerHTML = "<img class = 'resize' src='img/fences.jpg' border=0/>";
             document.getElementById("hoverImg").style.transitionDuration = "10s";
           } 
         }, //onmouseover

@@ -1,93 +1,95 @@
-//your array of words to search for--make multiple arrays!
-var firstWords = [
-'san mateo', '#mateoyouknow', 'you wish you were a bearcat'
+// #6 : your array of words to search for--make multiple arrays, for each movie
+// you are looking up!
+var rogueOneWords = [
+  'rogue one', 'rogueone', 'star wars', 'starwars', '#rogueone', 'rogue one box office', 'rogue one review'
 ]
+// ..Moana, Hidden Figures, Hidden Fences, Fences, La La Land
 
-//make counts!
-var firstWords = 0;
+// #7: make counts for each array (initialize at 0)!
+//var numRogueOneWords = 0;
 
-//twitter channel to pull data from
-var channel = 'pubnub-twitter';
-var pubnubTweet = PUBNUB.init({ //sub key for twitter stream
-  subscribe_key: 'sub-c-78806dd4-42a6-11e4-aed8-02ee2ddab7fe', //get tweets containing key words for Twitter chan
-  ssl: true
-}); //pubnub
+
+// #8 variable name for twitter channel to pull data from = 'pubnub-twitter'
+
+// #9: initialize PubNub object (goes around subscribe key)
+subscribe_key: 'sub-c-78806dd4-42a6-11e4-aed8-02ee2ddab7fe', //get tweets containing key 
+
+
 getStreamData();
-// fetch previous 75 Tweets, then realtime stream
+// fetch previous Tweets, then realtime stream
  function getStreamData() {
-   pubnubTweet.history({
-    channel: channel,
-    count: 75,
-    callback: function(messages) {
+   pubnubTweet.history({ //PubNub history API
+    channel: , // #10
+    count: , // #11 (you can use whatever number you want, I used 75)
+    callback: function(messages) { 
+    //callback is a function that runs within function when that function is successful. Here, processData runs if successful 
       pubnubTweet.each(messages[0], processData);
     }
   });
    pubnubTweet.subscribe({
-    channel: channel,
-    callback: processData
+    channel: , // #12, subscribe to same channel ('pubnub-twitter')
+    callback:  // #13 (processData)
   });
 }
-var totalNumTweets = 0;
+
+// #14: create variable to keep track of total number of tweets containing words in each array
+
 function processData(data) {
   if (!data) DOCUMENT.getElementById('chart') = "Data is loading.";
   
-  if (firstWords.some(function(v) {
+  // #15: if tweet contains word in array, convert tweet to lower-case
+  if (rogueOneWords.some(function(v) {
       return data.text.toLowerCase().indexOf(v) !== -1;
     })) {
-    numSingWords += 1;
-    publish2();
+    numRogueOneWords += 1; //increment array count
+    publish2(); //publish data to chart channel (each has separate)
     console.log(data);
-  } //...else if 
+    //copy and paste this code above ^^ for each array you made, editing the array and count names
+  } //if 
+  //else if.... for each array
 } //processData()
+
+// #15: create PubNub object for EON chart (use keys from PubNub.com)
 var pubnubEon = PUBNUB.init({
-  subscribe_key: 'sub-c-ec13adb2-2164-11e6-9327-02ee2ddab7fe', //different subscribe from Twitter
-  publish_key: 'pub-c-01ea45a2-75a8-40af-8db0-578d519eed0e' //separate keyset generated, paired with new subscribe key
+  subscribe_key: , //different subscribe from Twitter
+  publish_key:  //separate keyset generated, paired with new subscribe key
 });
 //publish chart
-var smHacksChan = 'smHacksChannel';
+var smHacksChan = 'smHacksChannel'; //channel to publish chart data to
 function publish2() {
   pubnubEon.publish({
     channel: smHacksChan,
     message: {
       eon: {
-        "La La Land": numLaLaLandWords / totalNumTweets,
-        "Moana": numMoanaWords / totalNumTweets,
-        "Hidden Figures": numHiddenFiguresWords / totalNumTweets,
         "Rogue One": numRogueOneWords / totalNumTweets,
-        "Fences": numFencesWords / totalNumTweets,
-        "Sing": numSingWords / totalNumTweets,
-        "Hidden Fences": numHiddenFencesWords / totalNumTweets
+        // #16: add in a line for each array you made. This is the data for chart.
       }
     }, //msg
     callback: function(m) {
-        console.log(m)
+        console.log(m) //print out tweets!
       } //callback
   }); //pubnubEon
 } //publish
+
 //embed chart
 eon.chart({
-  channel: smHacksChan,
-  pubnub: pubnubEon,
+  channel: smHacksChan, //different channel than subscribing to--this is to publish
+  pubnub: pubnubEon, //pubnub object
   generate: {
-    bindto: '#chart',
+    bindto: '#chart', //chart will show up in the HTML div in other file
     data: {
-      labels: true,
-      type: 'donut', //bar
+      labels: true, //display labels
+      type: 'donut', //could try different chart types, like bar
       colors: {
-        'Moana': 'blue',
-        'Sing': 'red',
-        'Hidden Fences': 'green',
         'Rogue One': 'gray',
-        'La La Land': 'pink',
-        'Hidden Figures': 'purple',
-        'Fences': 'brown'
+        // #17: colors of each section of chart for each movie
       } //colors	
     }, //data
     legend: {
       show: true,
       item: {
         onmouseover: function(id) {
-          //could also get pics easily straight from Warriors website instead of having in img folder
+          //display image for each film: done for you
           if (id == "Moana") {
             document.getElementById('hoverImg').innerHTML = "<img src='img/moana.jpg' border=0/></a>";
             document.getElementById("hoverImg").style.transitionDuration = "10s";
@@ -107,11 +109,11 @@ eon.chart({
             document.getElementById('hoverImg').innerHTML = "<img src='img/hiddenfigures.jpg' border=0/></a>";
             document.getElementById("hoverImg").style.transitionDuration = "10s";
           } else if (id == "Fences") {
-            document.getElementById('hoverImg').innerHTML = "<img class = 'resize' src='img/win.png' border=0/>";
+            document.getElementById('hoverImg').innerHTML = "<img class = 'resize' src='img/fences.jpg' border=0/>";
             document.getElementById("hoverImg").style.transitionDuration = "10s";
           } 
         }, //onmouseover
-        //onmouseout, img goes away
+        //onmouseout, img goes away: done for you
         onmouseout: function(id) {
             if (id == "Moana") {
               document.getElementById('hoverImg').innerHTML = " ";
