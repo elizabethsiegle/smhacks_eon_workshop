@@ -3,36 +3,43 @@
 var rogueOneWords = [
   'rogue one', 'rogueone', 'star wars', 'starwars', '#rogueone', 'rogue one box office', 'rogue one review'
 ]
-// ..Moana, Hidden Figures, Hidden Fences, Fences, La La Land
+//chart decorations plan for following movies: Moana, Hidden Figures, Hidden Fences, Fences, La La Land
+
 
 // #7: make counts for each array (initialize at 0)!
-//var numRogueOneWords = 0;
 
 
 // #8 variable name for twitter channel to pull data from = 'pubnub-twitter'
 
-// #9: initialize PubNub object (goes around subscribe key)
-subscribe_key: 'sub-c-78806dd4-42a6-11e4-aed8-02ee2ddab7fe', //get tweets containing key 
+
+// #9: initialize PubNub object (goes around subscribe key) -> var pubnubTweet = PUBNUB.init({
+
+  subscribe_key: 'sub-c-78806dd4-42a6-11e4-aed8-02ee2ddab7fe', //get tweets containing key 
+  ssl: true
+//});
+
+
 
 
 getStreamData();
 // fetch previous Tweets, then realtime stream
- function getStreamData() {
-   pubnubTweet.history({ //PubNub history API
+function getStreamData() {
+  pubnubTweet.history({ //PubNub history API
     channel: , // #10
     count: , // #11 (you can use whatever number you want, I used 75)
     callback: function(messages) { 
-    //callback is a function that runs within function when that function is successful. Here, processData runs if successful 
+      //callback is a function that runs within function when that function is successful. Here, processData runs if successful 
       pubnubTweet.each(messages[0], processData);
     }
   });
-   pubnubTweet.subscribe({
-    channel: , // #12, subscribe to same channel ('pubnub-twitter')
+  pubnubTweet.subscribe({
+    channel: , // #12, subscribe to same channel var name ('pubnub-twitter')
     callback:  // #13 (processData)
   });
 }
 
 // #14: create variable to keep track of total number of tweets containing words in each array
+
 
 function processData(data) {
   if (!data) DOCUMENT.getElementById('chart') = "Data is loading.";
@@ -42,6 +49,7 @@ function processData(data) {
       return data.text.toLowerCase().indexOf(v) !== -1;
     })) {
     numRogueOneWords += 1; //increment array count
+    totalNumTweets += 1; //increment total number of tweets 
     publish2(); //publish data to chart channel (each has separate)
     console.log(data);
     //copy and paste this code above ^^ for each array you made, editing the array and count names
@@ -50,12 +58,12 @@ function processData(data) {
 } //processData()
 
 // #15: create PubNub object for EON chart (use keys from PubNub.com)
-var pubnubEon = PUBNUB.init({
-  subscribe_key: , //different subscribe from Twitter
-  publish_key:  //separate keyset generated, paired with new subscribe key
+var pubnubEon = PUBNUB.init({ //publish key, subscribe key ^^
+  //publish key
+  //subscribe key
 });
 //publish chart
-var smHacksChan = 'smHacksChannel'; //channel to publish chart data to
+var smHacksChan = ' '; //make variable for channel to publish chart data to 
 function publish2() {
   pubnubEon.publish({
     channel: smHacksChan,
@@ -113,7 +121,7 @@ eon.chart({
             document.getElementById("hoverImg").style.transitionDuration = "10s";
           } 
         }, //onmouseover
-        //onmouseout, img goes away: done for you
+        //onmouseout, img goes away: done for you 
         onmouseout: function(id) {
             if (id == "Moana") {
               document.getElementById('hoverImg').innerHTML = " ";
