@@ -1,5 +1,7 @@
 This workshop is for SMHacks 2017. Here, you will make a realtime web data visualization of movies that are trending at the moment (ie. Moana, Rogue One, Hidden Figures, etc.) using PubNub. </br> 
+<img src = "https://cloud.githubusercontent.com/assets/8932430/22179394/e83f57b6-e01f-11e6-9a77-5dac790c906c.jpg" width = 350 height = 300> <img src = "https://cloud.githubusercontent.com/assets/8932430/22179395/e9747b84-e01f-11e6-91ea-109bec382437.jpg" width = 350 height = 300> </br>
 I had a blast leading this workshop, mentoring, and judging the final hacks. Check them out on the <a href = "https://smhacks.devpost.com/submissions">SMHacks DevPost</a>.
+</br>
 </br>
 <em>Workshop Directions</em></br>
 1. Clone the repo or download a zip file. </br>
